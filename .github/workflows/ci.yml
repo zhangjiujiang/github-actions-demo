@@ -7,15 +7,25 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Install and Build
-      run: |
-        npm install
-        npm run build
-    
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4
+    - name: multiple command
+      uses: appleboy/ssh-action@v0.1.10
       with:
-        folder: build
+          host: '18.167.36.15'
+          username: 'ec2-user'
+          key: ${{ secrets.SSH_KEY }}
+          port: '22'
+          script: |
+            whoami
+            ls -al
+    #多主机发布
+    # - name: multiple host
+    #   uses: appleboy/ssh-action@v0.1.10
+    #   with:
+    #      host: "foo.com,bar.com"
+    #      sync: true
+    #      username: ${{ secrets.USERNAME }}
+    #      key: ${{ secrets.KEY }}
+    #      port: ${{ secrets.PORT }}
+    #      script: |
+    #        whoami
+    #        ls -al
